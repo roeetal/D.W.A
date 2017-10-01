@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='Style/about.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Temp-name</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/bootstrap.min.css') }}">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/narrow-jumbotron.css') }}">
+    <script src="{{ url_for('static',filename='Scripts/read.js') }}"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link" href="/">HOME</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/read">READ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">ABOUT<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </nav><br>
+        <div class="container" id=logo><h1 id="name1">NAME</h1><h1 id="here1"> HERE</h1></div>
+      </div>
+    </div>
+
+    <div class="container">
+            <div class="row">
+                    <div class="col-8">
+                      <h2>About [Name]</h2>
+                      <p id="descr">[Name] aims to improve reading skills in early elementary school students. 
+                        [Name] generates reading comprehension questions based on inputted text.
+                        Next, students' answers are graded according to (our ?) algorithms. 
+                        They receive immediate feedback via [Title], 
+                        and are prompted to refer back to highlighted sections of the text that they may need to work on. 
+                        This also allows gives students the opportunity to work independently while still receiving personalized feedback.
+                        <br><br>With [Name], parents, teachers, and students can work together to facilitate children's learning both in and out of the classroom. </p>
+                    </div>
+                    <div id="team" class="col-4">
+                      <h2>Meet the Team</h2><br>
+                      <span><h4><i class="fa fa-1x fa-user-o"></i> Alison Wu</i></h4></i></span>
+                      Front-end developer
+                      <br><br>
+                      <h4><i class="fa fa-1x fa-user-o"></i>
+                      Divya Budihal</h4>
+                      Back-end developer
+                      <br><br>
+                      <h4><i class="fa fa-1x fa-user-o"></i>
+                      Eugene Shen</h4>
+                      Full stack developer
+                      <br><br>
+                      <h4><i class="fa fa-1x fa-user-o"></i>
+                      Ro-ee Tal</h4>
+                      Back-end developer
+                      <br><br>
+                      <h4><i class="fa fa-1x fa-user-o"></i>
+                      Zoey Gray</h4>
+                      Front-end developer
+
+                    </div>
+                  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

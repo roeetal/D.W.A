@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='Style/index.css') }}">
+    <link rel="icon" href="../../favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="{{ url_for('static',filename='Scripts/index.js') }}"></script>
+    <script src="jquery-3.1.1.min.js"></script>
+
+    <title>Temp-name</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/bootstrap.min.css') }}">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/narrow-jumbotron.css') }}">
+  </head>
+  <body>
+    <header>
+      <video autoplay loop class="video">
+        <source src="{{ url_for('static',filename='Media/intro-edited.mov') }}" type="video/mp4">
+      </video>
+    </header>
+
+      <div class="container">
+        <div class="overlay">
+      <h1 id="name">NAME</h1><h1 id="here"> HERE</h1>
+      <div class="container">
+      <form id="source" class="jumbotron">
+        <textarea id="source-textarea" name="text" placeholder="Paste your text here and click submit!" rows=40 cols=80 required="required"></textarea>
+        <input id="homebutton" type="submit" class="btn" href="/read" value="SUBMIT" />
+      </form>
+      </div>
+    </div>
+
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+        <a class="navbar-brand" href="https://eduhacks.com/">Created for EduHacks 2017</a>
+      </nav>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
