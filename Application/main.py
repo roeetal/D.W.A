@@ -5,6 +5,7 @@ from collections import defaultdict
 from pattern.en import conjugate
 import json
 
+json_string2 = ""
 json_string1 = r'''
 {
     "text": "He is often writing about the University of Central Florida.",
@@ -164,16 +165,18 @@ receives http post, sends data to be parsed, generate questions
 
 @app.route("/generate_questions", methods=['POST', 'GET'])
 def generate_questions():
+    global json_string2
+
     data = ''
     errors = ''
     thing = ''
     try:
         if request.method == 'POST':
             post = json.loads(request.data.decode('utf-8'))
+            if post['parsed']:
+                json_string2 = post['parsed']
             if post['data']:
                 data=post['data']
-            if post['parsed']:
-                json_string1 = post['parsed']
         else:
             raise ValueError('Please POST some data.')
         data = parse_source(data)
@@ -217,7 +220,6 @@ def generate_hints():
 
 
 def parse_json(json_string):
-    print(json_string)
     thing = json.loads(json_string)
     sentence = Sentence(thing["text"])
     for i in range(len(sentence.tokens)):
@@ -225,7 +227,6 @@ def parse_json(json_string):
         sentence.tokens[i].update(t["head"], t["tag"], t["label"])
         if t["head"] != -1:
             sentence.tokens[t["head"]].add_child(i)
-            print(sentence)
     return sentence
 
 
@@ -239,7 +240,8 @@ def get_child_tokens(sentence, index):
 
 def parse_source(data):
     # run the docker stuff
-    div =  parse_source_sentence(0, parse_json(json_string1))
+    div =  parse_source_sentence(0, parse_json(json_string2))
+    print(json_string2)
     return div
 
 
@@ -295,12 +297,62 @@ def parse_source_sentence(sentence_index, sentence):
     return question_list;
 
 def parse_answers(question, answer):
-    print(question[1])
-    print(answer_dict[question[1]])
     if answer in answer_dict[question[1]]:
         return "correct"
     else:
         return "sentence"
+
+def parse(input_data):
+    command = ("echo "+input_data+" | docker run --rm -i brianlow/syntaxnet")
+    output = Popen([command], stdout=PIPE, shell=True)
+    tokens=[]
+    parsed_tokens = []
+    for line in output.stdout:
+        tokens.append(line)
+    lines = tokens
+    tokens.pop(0)
+    tokens.pop(0)
+    line = tokens[0]
+    head = -1
+    start_num = -1
+    parts = line.split(" ")
+    word = parts[0]
+    index = input_data.index(word)
+    label = parts[1]
+    tag = parts[2]
+    token_num = 0
+    tokens.pop(0)
+    parsed_tokens.append({'word':word,'tag':tag,'head':head,'label':label,'index':index,'start_num':start_num,'children':[], 'token_num':token_num})
+    while len(tokens)>0:
+        line = tokens[0]
+        head = index
+        start_num = line.find('+')/3
+        line = line[(start_num)*3:]
+        parts = line.split()
+        # if len(parts)>4:
+        word = parts[1]
+        index = input_data.index(word)
+        label = parts[2]
+        tag = parts[3]
+        token_num +=1
+        tokens.pop(0)
+        parsed_tokens.append({'word':word,'tag':tag,'head':head,'label':label,'index':index,'start_num':start_num,'children':[], 'token_num':token_num})
+
+    i=0
+    while i+1 < len(parsed_tokens):
+        j = i + 1
+        if i==0:
+            for k in range(len(parsed_tokens)-1):
+                if parsed_tokens[k]['start_num'] == 0:
+                    parsed_tokens[i]['children'].append(parsed_tokens[k]['index'])
+            i+=1
+        else:
+            while parsed_tokens[j]['start_num'] - parsed_tokens[i]['start_num'] == 1:
+                parsed_tokens[i]['children'].append(parsed_tokens[j]['index'])
+                j+=1
+            i+=1
+    final_result = {'text': input_data, 'tokens': parsed_tokens}
+    return final_result
 
 if __name__=='__main__':
     # TODO: Threading true?

@@ -11,12 +11,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById("source-file");
     const reader = new FileReader();
     if (input.files.length) {
+      console.log('watever');
         var textFile = input.files[0];
         reader.readAsText(textFile);
         reader.onload = function (d) {
           window.localStorage.setItem(LOCAL_STORAGE_NAME + "2", d.target.result);
           window.location.href = "/read";
         };
+    } else {
+          window.location.href = "/read";
     }
   });
 });

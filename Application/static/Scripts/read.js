@@ -13,6 +13,7 @@ function startApp() {
   let source_text = window.localStorage.getItem(LOCAL_STORAGE_NAME);
   let parsed_text = window.localStorage.getItem(LOCAL_STORAGE_NAME + "2");
   source_words = JSON.parse(parsed_text).text.split(" ");
+  console.log(source_words);
   fetch("http://localhost:5000/generate_questions", {
         method: 'POST',
         headers: {

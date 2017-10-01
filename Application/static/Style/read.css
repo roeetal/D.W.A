@@ -98,3 +98,11 @@ input[type="text"] {
 .word {
   display: inline;
 }
+
+#source-wrapper {
+  padding-top: 6px;
+}
+
+#sucky {
+  margin-bottom: 10px;
+}
