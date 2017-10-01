@@ -20,7 +20,17 @@
 
 .nav {
   padding-right:246px;
+}
 
+.nav-pills a{
+  color:white;
+  background:transparent;
+  opacity:0.5;
+  font-family: 'Roboto',sans-serif;
+  }
+
+  .nav-pills a:hover { 
+    color: black;
 }
 
 #logo {
@@ -47,10 +57,14 @@
   color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
+  outline:none;
 }
 
 body {
+  background-image: url("https://image.ibb.co/mFHh6G/Untitled_5.jpg");
+  background-repeat: no-repeat;
   background-color: white;
+  background-size: 100%;
 }
 
 .jumbotron {
@@ -75,7 +89,7 @@ input[type="text"] {
 
 #name1 {
   float: left;
-  color: #223374 !important;
+  color: white !important;
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 80px !important;
@@ -83,16 +97,10 @@ input[type="text"] {
 
 #here1 {
   float: left;
-  color: #4563c5 !important;
+  color: white !important;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
   font-size: 80px !important;
-}
-
-#progress {
-  background-color: white !important;
-  opacity: 0.5;
-  color: black !important;
 }
 
 .word {

@@ -1,6 +1,6 @@
 #source-textarea {
   width: 600px;
-	height: 30px;
+	height: 70px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -8,12 +8,17 @@
 	font-weight: 300;
 	text-align: center;
 	outline:none;
-	border-color: white
+	border-color: white;
 }
 
 #source {
   background-color: white;
 }
+
+textarea {
+	padding-top: 20px;
+}
+
 
 #homebutton {
   border-color: white;
