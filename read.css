@@ -1,0 +1,99 @@
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #4563c5;
+  background: -webkit-linear-gradient(left top, #223374, #4563c5);
+  background: -o-linear-gradient(bottom right, #223374, #4563c5);
+  background: -moz-linear-gradient(bottom right, #223374, #4563c5);
+  background: linear-gradient(to bottom right, #223374, #4563c5);
+  opacity: 0.95;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 26px;
+  color: white;
+  letter-spacing: 0.005em;
+}
+
+.nav {
+  padding-right:246px;
+
+}
+
+#logo {
+  margin-top: 20px;
+  margin-left: 120px;
+}
+
+#source-wrapper {
+  background-color: white;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  font-size: 26px;
+  line-height: 2;
+  letter-spacing: 0.025em;
+  margin-bottom: 200px;
+}
+
+#submit {
+  background-color: transparent;
+  border-color: white;
+  border-width: 1.5px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
+
+body {
+  background-color: white;
+}
+
+.jumbotron {
+  background-color: transparent !important;
+}
+
+input[type="text"] {
+  font-family: 'Roboto', sans-serif;
+}
+
+#answerinput {
+  width: 1000px;
+  margin-bottom: 27px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#submit {
+  margin-bottom: 27px;
+}
+
+#name1 {
+  float: left;
+  color: #223374 !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 80px !important;
+}
+
+#here1 {
+  float: left;
+  color: #4563c5 !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: 80px !important;
+}
+
+#progress {
+  background-color: white !important;
+  opacity: 0.5;
+  color: black !important;
+}
+
+.word {
+  display: inline;
+}
