@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="read.css">
     <link rel="icon" href="../../favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
@@ -20,6 +20,7 @@
 
     <!-- Custom styles for this template -->
     <link href="assets/narrow-jumbotron.css" rel="stylesheet">
+    <script src="read.js"></script>
   </head>
 
   <body>
@@ -28,23 +29,34 @@
         <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="read.html">Read</a>
+              <a class="nav-link active" href="#">Read <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>
             </li>
           </ul>
         </nav>
-        <h3 id="test" class="text-muted">Project name</h3>
+        <h3 class="text-muted">Project name</h3>
       </div>
 
-      <form id="source" class="jumbotron">
-        <textarea id="source-textarea" name="text" placeholder="Paste your text here!" rows=40 cols=80 required="required"></textarea>
-        <input id="homebutton" type="submit" class="btn btn-lg btn-success" href="#" value="Submit your text!" />
-      </form>
+      <div id="source-wrapper" class="jumbotron">
+        <p class="lead" id="source-text"></p>
+      </div>
+
+      <div id="footer" class="jumbotron">
+        <p id="question-box">
+          <i class="fa fa-lightbulb-o" aria-hidden="true"></i>  What are 3 main ideas from this passage?
+        </p>
+        <form id="answer-box">
+          <input id="answerinput" type="text" name="text" placeholder="Insert your text here!" rows=40 cols=80 required="required"></textarea>
+          <br />
+          <input id="submit" type="submit" class="btn btn-lg btn-success" value="SUBMIT" />
+        </form>
+        <div id="progress" class="progress-bar bg-success" role="progressbar"></div>
+      </div>
     </div>
 
     <!-- Bootstrap core JavaScript

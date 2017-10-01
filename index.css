@@ -3,14 +3,30 @@
   height: 400px;
 }
 
-#footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	margin-bottom: 0;
+#source {
+  background-color: white;
 }
 
-#source-wrapper {
-  margin-bottom: 200px;
+#homebutton {
+  background-color: #1E71B1;
+  border-color: white;
+  border-radius: 0;
+  border-width: 1.5px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
+
+body {
+  background-color: #FFFFF8;
+}
+
+#test {
+  color: #2A98F1;
+  font-size: 35px;
+  font-family: 'Nunito', sans-serif;
+}
+
+input[type="text"] {
+  font-family: 'Roboto', sans-serif;
 }
