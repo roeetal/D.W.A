@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from collections import OrderedDict
 import json
 import socket
+import parse 
 
 app = Flask(__name__)
 
@@ -80,8 +81,11 @@ requires text data as string
 @return: String: generated question(s)
 
 """
-def parse(input_data):
+def parseReading(input_data):
+
     sentences = input_data.split('. ')
+    while (i < len(sentences))
+        select_constituent(_parse_text(sentences[i]))
     return sentences[0]
 
 """
@@ -93,7 +97,8 @@ requires text data and answers as sseparate string
 
 """
 
-def parse(input_data, answers):
+def parseAnswer(input_data, answers):
+    
     sentences = input_data.split('. ')
     return sentences[0]
 
