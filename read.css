@@ -18,6 +18,16 @@
   letter-spacing: 0.005em;
 }
 
+.nav {
+  padding-right:246px;
+
+}
+
+#logo {
+  margin-top: 20px;
+  margin-left: 120px;
+}
+
 #source-wrapper {
   background-color: white;
   color: black;
