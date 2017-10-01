@@ -9,10 +9,11 @@ let question_list;
 // start the application
 
 function startApp() {
-  document.getElementById("progress").style.width = 0;
+//  document.getElementById("progress").style.width = 0;
   let source_text = window.localStorage.getItem(LOCAL_STORAGE_NAME);
-  let parsed_text = window.localStorage.getItem(LOCAL_STORAGE_NAME + "2");
-  source_words = JSON.parse(parsed_text).text.split(" ");
+//  let parsed_text = window.localStorage.getItem(LOCAL_STORAGE_NAME + "2");
+//  source_words = JSON.parse(parsed_text).text.split(" ");
+  source_words = source_text.split(" ");
   console.log(source_words);
   fetch("http://localhost:5000/generate_questions", {
         method: 'POST',
@@ -21,13 +22,14 @@ function startApp() {
                   'Content-Type': 'application/json',
                   'Access-Control-Allow-Origin': '*',
               },
-      body: JSON.stringify({"data": source_text, "parsed": parsed_text}),
+      body: JSON.stringify({"data": source_text}),
       })
       .then(function (a) {
           return a.json();
       })
       .then(function (json) {
         question_list = Object.values(json.data);
+        console.log(question_list);
         total_questions = question_list.length;
         console.log(question_list);
         document.getElementById("question").innerHTML = question_list[current_question][1];

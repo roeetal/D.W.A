@@ -6,7 +6,7 @@ let source_words;
 // start the application
 
 function startApp() {
-  document.getElementById("progress").style.width = `${progress_percent}%`
+//  document.getElementById("progress").style.width = `${progress_percent}%`
   source_words = window.localStorage.getItem(LOCAL_STORAGE_NAME).split(" ");
   for (let i in source_words) {
     if (i % 5 == 0)
@@ -31,7 +31,7 @@ function drawApp() {
 
 function submitAnswer(answer_text) {
   progress_percent += 10;
-  document.getElementById("progress").style.width = `${progress_percent}%`
+//  document.getElementById("progress").style.width = `${progress_percent}%`
 }
 
 // add all event listeners when ready

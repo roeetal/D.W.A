@@ -112,32 +112,35 @@ app = Flask(__name__)
 CORS(app)
 
 class Token:
-    def __init__(self, index, word):
+    def __init__(self, index, word, head, tag, label, start_num):
         self.index = index
+        self.start_num = start_num
         self.word = word
         self.children = []
-    def update(self, head, tag, label):
         self.head = head
         self.tag = tag
         self.label = label
-    def add_child(self, index):
-        self.children.append(index)
+    def getStart(self):
+        return self.start_num
+    def getIn(self):
+        return self.index;
+    def updateChildren(self, ch):
+        self.children.append(ch)
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
             sort_keys=True, indent=4)
 
 class Sentence:
-    def __init__(self, text):
+    def __init__(self, text, tokes):
         self.text = text
-        self.tokens = []
-        for i, word in enumerate(text[:-1].lower().split(" ")):
-            self.tokens.append(Token(i, word))
+        self.tokens = tokes
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
             sort_keys=True, indent=4)
 
 @app.route('/')
 def index():
+#    print parse("Hello we are at the hackathon.")
     return render_template('index.html')
 
 @app.route('/read')
@@ -148,10 +151,10 @@ def read():
 def about():
     return render_template('about.html')
 
-def parse(message):
-    command = ("echo "+message+" | sudo docker run --rm -i brianlow/syntaxnet")
-    output = Popen([command], stdout=PIPE, shell=True)
-    return output.stdout.read()
+# def parse(message):
+#     command = ("echo "+message+" | sudo docker run --rm -i brianlow/syntaxnet")
+#     output = Popen([command], stdout=PIPE, shell=True)
+#     return parse_eee(output.stdout.read())
 
 """
 requires text data in post
@@ -173,8 +176,6 @@ def generate_questions():
     try:
         if request.method == 'POST':
             post = json.loads(request.data.decode('utf-8'))
-            if post['parsed']:
-                json_string2 = post['parsed']
             if post['data']:
                 data=post['data']
         else:
@@ -240,23 +241,23 @@ def get_child_tokens(sentence, index):
 
 def parse_source(data):
     # run the docker stuff
-    div =  parse_source_sentence(0, parse_json(json_string2))
-    print(json_string2)
+    div =  parse_source_sentence(0, parse(data))
     return div
 
 
 def parse_source_sentence(sentence_index, sentence):
     question_list = defaultdict(list)
-
     child_token_list = []
     for token in sentence.tokens:
+        print(get_child_tokens(sentence, token.index));
         child_token_list.append(get_child_tokens(sentence, token.index))
 
     for i, token in enumerate(sentence.tokens):
-        if token.label == "root":
+        print(token)
+        if token.tag == "ROOT\n" or token.label == "root":
             question_tokens = ["what", "did"]
             for j, t in enumerate(sentence.tokens):
-                if t.label == "nsubj":
+                if t.tag == "nsubj" or t.label == "nsubj":
                     for k in child_token_list[j]:
                         question_tokens.append(sentence.tokens[k].word)
                     break
@@ -267,11 +268,11 @@ def parse_source_sentence(sentence_index, sentence):
                     question[0].upper() + question[1:] + "?")
 
         else:
-            if token.label == "nmod:poss":
+            if token.tag == "poss" or token.label == "nmod:poss":
                 wh = "whose"
-            elif token.label == "nsubj":
+            elif token.tag == "nsubj" or token.label == "nsubj":
                 wh = "who"
-            elif token.label == "obj":
+            elif token.tag == "pobj" or token.tag == "dobj" or token.label == "obj":
                 wh = "what"
             else:
                 continue
@@ -286,6 +287,7 @@ def parse_source_sentence(sentence_index, sentence):
             question = " ".join(question_tokens)
             question_list[i] = (sentence_index,
                     question[0].upper() + question[1:] + "?")
+            print(question)
 
         index = i
         while index != -1:
@@ -317,12 +319,12 @@ def parse(input_data):
     start_num = -1
     parts = line.split(" ")
     word = parts[0]
-    index = input_data.index(word)
+    index = input_data.split(" ").index(word)
     label = parts[1]
     tag = parts[2]
     token_num = 0
     tokens.pop(0)
-    parsed_tokens.append({'word':word,'tag':tag,'head':head,'label':label,'index':index,'start_num':start_num,'children':[], 'token_num':token_num})
+    parsed_tokens.append(Token(index, word, head, tag, label, start_num))
     while len(tokens)>0:
         line = tokens[0]
         head = index
@@ -331,27 +333,27 @@ def parse(input_data):
         parts = line.split()
         # if len(parts)>4:
         word = parts[1]
-        index = input_data.index(word)
+        index = input_data.split(" ").index(word)
         label = parts[2]
         tag = parts[3]
         token_num +=1
         tokens.pop(0)
-        parsed_tokens.append({'word':word,'tag':tag,'head':head,'label':label,'index':index,'start_num':start_num,'children':[], 'token_num':token_num})
-
+        parsed_tokens.append(Token(index, word, head, tag, label, start_num))
     i=0
     while i+1 < len(parsed_tokens):
         j = i + 1
         if i==0:
             for k in range(len(parsed_tokens)-1):
-                if parsed_tokens[k]['start_num'] == 0:
-                    parsed_tokens[i]['children'].append(parsed_tokens[k]['index'])
+                if parsed_tokens[k].getStart() == 0:
+                    parsed_tokens[i].updateChildren(parsed_tokens[k].getIn())
             i+=1
         else:
-            while parsed_tokens[j]['start_num'] - parsed_tokens[i]['start_num'] == 1:
-                parsed_tokens[i]['children'].append(parsed_tokens[j]['index'])
+            while parsed_tokens[j].getStart() - parsed_tokens[i].getStart() == 1:
+                parsed_tokens[i].updateChildren(parsed_tokens[j].getIn())
                 j+=1
             i+=1
-    final_result = {'text': input_data, 'tokens': parsed_tokens}
+    final_result = Sentence(input_data, parsed_tokens)
+    print(final_result.toJSON())
     return final_result
 
 if __name__=='__main__':
