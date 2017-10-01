@@ -1,6 +1,12 @@
 #source-textarea {
   width: 600px;
-  height: 400px;
+	height: 30px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	text-align: center;
 }
 
 #source {
@@ -8,25 +14,78 @@
 }
 
 #homebutton {
-  background-color: #1E71B1;
   border-color: white;
-  border-radius: 0;
   border-width: 1.5px;
   color: white;
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+	font-size: 20px;
+	background-color: transparent;
+	margin-top: 20px;
 }
 
 body {
-  background-color: #FFFFF8;
+	height: 100%;
+	margin: auto;
 }
 
-#test {
-  color: #2A98F1;
-  font-size: 35px;
-  font-family: 'Nunito', sans-serif;
+.jumbotron {
+	float:left;
+	opacity: 0.8;
+	background-color: transparent !important;;
+	border-radius: 0 !important;
+	padding-top: 10px !important;
 }
 
-input[type="text"] {
+header {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.video {
+	position: fixed;
+	top: 50%; left: 50%;
+	z-index: 1;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	transform: translate(-50%, -50%);
+}
+
+input[type="submit"] {
   font-family: 'Roboto', sans-serif;
+}
+
+.container { position:relative; }
+.container video {
+    position:relative;
+    z-index:0;
+}
+.overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+}
+
+#name {
+	margin-top: 200px;
+	margin-left: 85px;
+	float: left;
+	color: white !important;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 100px !important;
+}
+
+#here {
+	margin-left: 10px;
+	margin-top: 200px;
+	float: left;
+	color: white !important;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	font-size: 100px !important;
 }

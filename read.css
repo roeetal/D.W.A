@@ -3,15 +3,15 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  margin-bottom: 0;
-  background-color: #2A98F1;
-  background: -webkit-linear-gradient(left top, #2A98F1, #031A2B);
-  background: -o-linear-gradient(bottom right, #2A98F1, #031A2B);
-  background: -moz-linear-gradient(bottom right, #2A98F1, #031A2B);
-  background: linear-gradient(to bottom right, #2A98F1, #031A2B);
+  background-color: #4563c5;
+  background: -webkit-linear-gradient(left top, #223374, #4563c5);
+  background: -o-linear-gradient(bottom right, #223374, #4563c5);
+  background: -moz-linear-gradient(bottom right, #223374, #4563c5);
+  background: linear-gradient(to bottom right, #223374, #4563c5);
   opacity: 0.95;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
   font-family: 'Roboto', sans-serif;
   font-size: 26px;
   color: white;
@@ -30,9 +30,8 @@
 }
 
 #submit {
-  background-color: #1E71B1;
+  background-color: transparent;
   border-color: white;
-  border-radius: 0;
   border-width: 1.5px;
   color: white;
   font-family: 'Roboto', sans-serif;
@@ -40,7 +39,11 @@
 }
 
 body {
-  background-color: #FFFFF8;
+  background-color: white;
+}
+
+.jumbotron {
+  background-color: transparent !important;
 }
 
 input[type="text"] {
@@ -50,7 +53,32 @@ input[type="text"] {
 #answerinput {
   width: 1000px;
   margin-bottom: 27px;
+  -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 #submit {
   margin-bottom: 27px;
+}
+
+#name1 {
+	float: left;
+	color: #223374 !important;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 80px !important;
+}
+
+#here1 {
+	float: left;
+	color: #4563c5 !important;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	font-size: 80px !important;
+}
+
+#progress {
+  background-color: white !important;
+  opacity: 0.5;
+  color: black !important;
 }
