@@ -5,29 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='Style/index.css') }}">
     <link rel="icon" href="../../favicon.ico">
-    <a href="read.html"></a>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="Scripts/index.js"></script>
+    <script src="{{ url_for('static',filename='Scripts/index.js') }}"></script>
     <script src="jquery-3.1.1.min.js"></script>
 
     <title>Temp-name</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="assets/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/bootstrap.min.css') }}">
 
     <!-- Custom styles for this template -->
-    <link href="assets/narrow-jumbotron.css" rel="stylesheet">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/narrow-jumbotron.css') }}">
   </head>
   <body>
     <header>
       <video autoplay loop class="video">
-        <source src="Media/intro.mp4" type="video/mp4">
+        <source src="{{ url_for('static',filename='Media/intro.mp4') }}" type="video/mp4">
       </video>
     </header>
 
@@ -37,7 +36,7 @@
       <div class="container">
       <form id="source" class="jumbotron">
         <textarea id="source-textarea" name="text" placeholder="Paste your text here and click submit!" rows=40 cols=80 required="required"></textarea>
-        <input id="homebutton" type="submit" class="btn" href="read.html" value="SUBMIT" />
+        <input id="homebutton" type="submit" class="btn" href="/read" value="SUBMIT" />
       </form>
       </div>
     </div>

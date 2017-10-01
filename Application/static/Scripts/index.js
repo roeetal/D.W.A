@@ -7,6 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     window.localStorage.setItem(LOCAL_STORAGE_NAME, e.target.elements.text.value);
     e.target.elements.text.value = "";
-    window.location.href = "read.html";
+    window.location.href = "/read";
   });
 });

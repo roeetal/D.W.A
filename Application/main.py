@@ -10,8 +10,16 @@ def index():
     message = "My Name Jeff and I am at a hackathon dying right now."
     command = ("echo "+message+" | docker run --rm -i brianlow/syntaxnet")
     output = Popen([command], stdout=PIPE, shell=True)
-    print output.stdout.read()
+    print(output.stdout.read())
     return render_template('index.html')
+
+@app.route('/read')
+def read():
+    return render_template('read.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 """
 requires text data in post

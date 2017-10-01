@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="Style/read.css">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='Style/read.css') }}">
     <link rel="icon" href="../../favicon.ico">
     <a href="index.html"></a>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -15,11 +15,11 @@
     <title>Temp-name</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="assets/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/bootstrap.min.css') }}">
 
     <!-- Custom styles for this template -->
-    <link href="assets/narrow-jumbotron.css" rel="stylesheet">
-    <script src="Scripts/read.js"></script>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='assets/narrow-jumbotron.css') }}">
+    <script src="{{ url_for('static',filename='Scripts/read.js') }}"></script>
   </head>
 
   <body>
@@ -28,13 +28,13 @@
         <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">HOME</a>
+              <a class="nav-link" href="/">HOME</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="#">READ<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">ABOUT</a>
+              <a class="nav-link" href="/about">ABOUT</a>
             </li>
           </ul>
         </nav><br>
