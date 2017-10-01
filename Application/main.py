@@ -5,6 +5,105 @@ from collections import defaultdict
 from pattern.en import conjugate
 import json
 
+json_string1 = r'''
+{
+    "text": "He is often writing about the University of Central Florida.",
+    "tokens": [
+        {
+            "children": [],
+            "head": 3,
+            "index": 0,
+            "label": "nsubj",
+            "tag": "attribute { name: \"Case\" value: \"Nom\" } attribute { name: \"Gender\" value: \"Masc\" } attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"Person\" value: \"3\" } attribute { name: \"PronType\" value: \"Prs\" } attribute { name: \"fPOS\" value: \"PRON++PRP\" } ",
+            "word": "he"
+        },
+        {
+            "children": [],
+            "head": 3,
+            "index": 1,
+            "label": "aux",
+            "tag": "attribute { name: \"Mood\" value: \"Ind\" } attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"Person\" value: \"3\" } attribute { name: \"Tense\" value: \"Pres\" } attribute { name: \"VerbForm\" value: \"Fin\" } attribute { name: \"fPOS\" value: \"AUX++VBZ\" } ",
+            "word": "is"
+        },
+        {
+            "children": [],
+            "head": 3,
+            "index": 2,
+            "label": "advmod",
+            "tag": "attribute { name: \"fPOS\" value: \"ADV++RB\" } ",
+            "word": "often"
+        },
+        {
+            "children": [
+                0,
+                1,
+                2,
+                6
+            ],
+            "head": -1,
+            "index": 3,
+            "label": "root",
+            "tag": "attribute { name: \"Tense\" value: \"Pres\" } attribute { name: \"VerbForm\" value: \"Part\" } attribute { name: \"fPOS\" value: \"VERB++VBG\" } ",
+            "word": "writing"
+        },
+        {
+            "children": [],
+            "head": 6,
+            "index": 4,
+            "label": "case",
+            "tag": "attribute { name: \"fPOS\" value: \"ADP++IN\" } ",
+            "word": "about"
+        },
+        {
+            "children": [],
+            "head": 6,
+            "index": 5,
+            "label": "det",
+            "tag": "attribute { name: \"Definite\" value: \"Def\" } attribute { name: \"PronType\" value: \"Art\" } attribute { name: \"fPOS\" value: \"DET++DT\" } ",
+            "word": "the"
+        },
+        {
+            "children": [
+                4,
+                5,
+                9
+            ],
+            "head": 3,
+            "index": 6,
+            "label": "obl",
+            "tag": "attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"fPOS\" value: \"NOUN++NN\" } ",
+            "word": "university"
+        },
+        {
+            "children": [],
+            "head": 9,
+            "index": 7,
+            "label": "case",
+            "tag": "attribute { name: \"fPOS\" value: \"ADP++IN\" } ",
+            "word": "of"
+        },
+        {
+            "children": [],
+            "head": 9,
+            "index": 8,
+            "label": "compound",
+            "tag": "attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"fPOS\" value: \"PROPN++NNP\" } ",
+            "word": "central"
+        },
+        {
+            "children": [
+                7,
+                8
+            ],
+            "head": 6,
+            "index": 9,
+            "label": "nmod",
+            "tag": "attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"fPOS\" value: \"PROPN++NNP\" } ",
+            "word": "florida"
+        }
+    ]
+}'''
+
 question_lists = []
 answer_dict = defaultdict(list)
 
@@ -73,8 +172,8 @@ def generate_questions():
             post = json.loads(request.data.decode('utf-8'))
             if post['data']:
                 data=post['data']
-            else:
-                raise ValueError('You did not send data!')
+            if post['parsed']:
+                json_string1 = post['parsed']
         else:
             raise ValueError('Please POST some data.')
         data = parse_source(data)
@@ -118,6 +217,7 @@ def generate_hints():
 
 
 def parse_json(json_string):
+    print(json_string)
     thing = json.loads(json_string)
     sentence = Sentence(thing["text"])
     for i in range(len(sentence.tokens)):
@@ -125,6 +225,7 @@ def parse_json(json_string):
         sentence.tokens[i].update(t["head"], t["tag"], t["label"])
         if t["head"] != -1:
             sentence.tokens[t["head"]].add_child(i)
+            print(sentence)
     return sentence
 
 

@@ -7,6 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     window.localStorage.setItem(LOCAL_STORAGE_NAME, e.target.elements.text.value);
     e.target.elements.text.value = "";
-    window.location.href = "/read";
+
+    const input = document.getElementById("source-file");
+    const reader = new FileReader();
+    if (input.files.length) {
+        var textFile = input.files[0];
+        reader.readAsText(textFile);
+        reader.onload = function (d) {
+          window.localStorage.setItem(LOCAL_STORAGE_NAME + "2", d.target.result);
+          window.location.href = "/read";
+        };
+    }
   });
 });

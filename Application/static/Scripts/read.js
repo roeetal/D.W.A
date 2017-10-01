@@ -11,7 +11,8 @@ let question_list;
 function startApp() {
   document.getElementById("progress").style.width = 0;
   let source_text = window.localStorage.getItem(LOCAL_STORAGE_NAME);
-  source_words = source_text.split(" ");
+  let parsed_text = window.localStorage.getItem(LOCAL_STORAGE_NAME + "2");
+  source_words = JSON.parse(parsed_text).text.split(" ");
   fetch("http://localhost:5000/generate_questions", {
         method: 'POST',
         headers: {
@@ -19,7 +20,7 @@ function startApp() {
                   'Content-Type': 'application/json',
                   'Access-Control-Allow-Origin': '*',
               },
-        body: JSON.stringify({"data": source_text}),
+      body: JSON.stringify({"data": source_text, "parsed": parsed_text}),
       })
       .then(function (a) {
           return a.json();
