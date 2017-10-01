@@ -5,6 +5,9 @@ from collections import defaultdict
 from pattern.en import conjugate
 import json
 
+question_lists = []
+answer_dict = defaultdict(list)
+
 app = Flask(__name__)
 CORS(app)
 
@@ -35,10 +38,6 @@ class Sentence:
 
 @app.route('/')
 def index():
-    message = "My Name Jeff and I am at a hackathon dying right now."
-    command = ("echo "+message+" | sudo docker run --rm -i brianlow/syntaxnet")
-    output = Popen([command], stdout=PIPE, shell=True)
-    print(output.stdout.read())
     return render_template('index.html')
 
 @app.route('/read')
@@ -48,6 +47,11 @@ def read():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+def parse(message):
+    command = ("echo "+message+" | sudo docker run --rm -i brianlow/syntaxnet")
+    output = Popen([command], stdout=PIPE, shell=True)
+    return output.stdout.read()
 
 """
 requires text data in post
@@ -63,6 +67,7 @@ receives http post, sends data to be parsed, generate questions
 def generate_questions():
     data = ''
     errors = ''
+    thing = ''
     try:
         if request.method == 'POST':
             post = json.loads(request.data.decode('utf-8'))
@@ -73,9 +78,10 @@ def generate_questions():
         else:
             raise ValueError('Please POST some data.')
         data = parse_source(data)
+        thing = dict(data)
     except Exception as e:
         errors = str(e)
-    return json.dumps({"data": data, "errors": errors})
+    return json.dumps({"data": thing, "errors": errors})
 
 """
 requires text data and answer(s) in post
@@ -95,33 +101,20 @@ def generate_hints():
     try:
         if request.method == 'POST':
             post = json.loads(request.data.decode('utf-8'))
-            if post['data']:
-                data=post['data']
+            if post['answer']:
+                answer=post['answer']
             else:
                 raise ValueError('You did not send data')
-            if post['answers']:
-                answers=post['answers']
+            if post['question']:
+                question=post['question']
             else:
                 raise ValueError('You did not send data')
         else:
             raise ValueError('Please POST some data')
-        data = parse_answers(data)
+        data = parse_answers(question, answer)
     except Exception as e:
         errors = str(e)
     return json.dumps({"data": data, "errors": errors})
-
-"""
-
-requires text data as string
-
-@param: String text data
-@return: String: generated tree
-
-"""
-def parse(input_data):
-    sentences = input_data.split('. ')
-    print(sentences)
-    return sentences[0]
 
 
 def parse_json(json_string):
@@ -143,9 +136,14 @@ def get_child_tokens(sentence, index):
     return tokens
 
 
-def parse_source(sentence):
+def parse_source(data):
+    # run the docker stuff
+    div =  parse_source_sentence(0, parse_json(json_string1))
+    return div
+
+
+def parse_source_sentence(sentence_index, sentence):
     question_list = defaultdict(list)
-    answer_list = defaultdict(list)
 
     child_token_list = []
     for token in sentence.tokens:
@@ -162,7 +160,8 @@ def parse_source(sentence):
             question_tokens.append(conjugate(
                 token.word, tense = "infinitive"))
             question = " ".join(question_tokens)
-            question_list[i] = question[0].upper() + question[1:] + "?"
+            question_list[i] = (sentence_index,
+                    question[0].upper() + question[1:] + "?")
 
         else:
             if token.label == "nmod:poss":
@@ -182,17 +181,25 @@ def parse_source(sentence):
                 elif j not in deleted_tokens:
                     question_tokens.append(t.word)
             question = " ".join(question_tokens)
-            question_list[i] = question[0].upper() + question[1:] + "?"
+            question_list[i] = (sentence_index,
+                    question[0].upper() + question[1:] + "?")
 
         index = i
         while index != -1:
             answer = " ".join([sentence.tokens[t].word for t in child_token_list[index]])
-            answer_list[i].append(answer[0].upper() + answer[1:] + ".")
+            answer_dict[question_list[i][1]].append(answer[0].upper() + answer[1:] + ".")
             index = sentence.tokens[index].head
 
+    question_lists.append(json.dumps(question_list))
     return question_list;
 
-def parse_answers(sentence):
+def parse_answers(question, answer):
+    print(question[1])
+    print(answer_dict[question[1]])
+    if answer in answer_dict[question[1]]:
+        return "correct"
+    else:
+        return "sentence"
 
 if __name__=='__main__':
     # TODO: Threading true?
