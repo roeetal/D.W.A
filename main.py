@@ -38,9 +38,20 @@ def generate_questions():
     output = OrderedDict([('questions', data), ('errors', errors)])
     return json.dumps(output)
 
+"""
+requires text data and answer(s) in post
+
+@param: HTTP POST: Constains text data, answers
+@return: JSON Dict: generated hints(s)
+
+receives http post, sends data to be parsed, generate hints
+
+"""
+
 @app.route("/generate_hints", methods=['POST', 'GET'])
 def generate_hints():
     data = ''
+    answer = ''
     errors = ''
     try:
         if request.method == 'POST':
@@ -49,16 +60,16 @@ def generate_hints():
                 data=post['data']
             else:
                 raise ValueError('You did not send data')
-            if post['data']:
-                data=post['data']
+            if post['answers']:
+                answers=post['answers']
             else:
                 raise ValueError('You did not send data')
         else:
             raise ValueError('Please POST some data')
-        data = parse(data)
+        data = parse(data, hints)
     except Exception as e:
         errors = str(e)
-    output = OrderedDict([('data', data), ('errors', errors)])
+    output = OrderedDict([('hints', data), ('errors', errors)])
     return json.dumps(output)
 
 """
@@ -70,6 +81,19 @@ requires text data as string
 
 """
 def parse(input_data):
+    sentences = input_data.split('. ')
+    return sentences[0]
+
+"""
+
+requires text data and answers as sseparate string
+
+@param: String text data, answers
+@return: String: generated hint(s)
+
+"""
+
+def parse(input_data, answers):
     sentences = input_data.split('. ')
     return sentences[0]
 
