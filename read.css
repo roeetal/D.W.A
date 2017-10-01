@@ -64,31 +64,36 @@ input[type="text"] {
   width: 1000px;
   margin-bottom: 27px;
   -webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
+
 #submit {
   margin-bottom: 27px;
 }
 
 #name1 {
-	float: left;
-	color: #223374 !important;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 700;
-	font-size: 80px !important;
+  float: left;
+  color: #223374 !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 80px !important;
 }
 
 #here1 {
-	float: left;
-	color: #4563c5 !important;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 100;
-	font-size: 80px !important;
+  float: left;
+  color: #4563c5 !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: 80px !important;
 }
 
 #progress {
   background-color: white !important;
   opacity: 0.5;
   color: black !important;
+}
+
+.word {
+  display: inline;
 }
