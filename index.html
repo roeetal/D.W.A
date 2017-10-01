@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="index.css">
     <link rel="icon" href="../../favicon.ico">
 
     <title>Temp-name</title>
@@ -14,44 +15,37 @@
 
     <!-- Custom styles for this template -->
     <link href="assets/narrow-jumbotron.css" rel="stylesheet">
+    <script src="index.js"></script>
   </head>
 
   <body>
 
     <div class="container">
       <div class="header clearfix">
-        <!-- <nav>
-          <ul class="nav nav-pills float-right">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </nav> -->
         <h3 class="text-muted">Project name</h3>
       </div>
 
-      <div id="page-one" class="jumbotron">
-        <!-- <h1 class="display-3">Temp Title</h1> -->
-        <!-- <p class="lead">Insert your text here!</p> -->
-        <textarea placeholder="Insert your text here!" style="width: 600px; height: 400px;"></textarea>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
+      <form id="source" class="jumbotron">
+        <textarea id="source-textarea" name="text" placeholder="Insert your text here!" rows=40 cols=80 required="required"></textarea>
+        <input type="submit" class="btn btn-lg btn-success" href="#" value="Submit your text!" role="button"></button>
+      </form>
 
-      <div id="page-two" class="jumbotron" style="background: white;">
-        <!-- <h1 class="display-3">Temp Title</h1> -->
-        <p class="lead">Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-      </div>
+      <div id="read">
+        <div id="source-wrapper" class="jumbotron">
+          <!-- <h1 class="display-3">Temp Title</h1> -->
+          <p class="lead" id="source-text"></p>
+        </div>
 
-      <div id="question-box" class="jumbotron" style="background: gray; color: white;">
-        hello
-        <div class="progress">
-          <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        <div id="footer" class="jumbotron">
+					<p id="question-box">
+				    Sample Question ???
+          </p>
+          <form id="answer-box">
+            <input type="text" id="text" placeholder="Insert your text here!" rows=40 cols=80 required="required"></textarea>
+            <br />
+            <input type="submit" class="btn btn-lg btn-success" href="#" value="Submit your answer!" role="button"></button>
+          </form>
+          <div id="progress" class="progress-bar bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
 
@@ -66,10 +60,6 @@
           <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
         </div>
       </div> -->
-
-      <footer class="footer">
-        <p>&copy; Company 2017</p>
-      </footer>
 
     </div> <!-- /container -->
 

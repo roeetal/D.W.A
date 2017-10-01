@@ -1,0 +1,16 @@
+#source-textarea {
+  width: 600px;
+  height: 400px;
+}
+
+#footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	margin-bottom: 0;
+}
+
+#source-wrapper {
+  margin-bottom: 200px;
+}
