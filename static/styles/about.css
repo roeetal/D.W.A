@@ -1,12 +1,16 @@
 .nav {
     padding-right:246px;
   }
-  
+
   #logo {
     margin-top: 20px;
     margin-left: 120px;
   }
-  
+
+  p {
+    margin-right: 70px;
+  }
+
   #source-wrapper {
     background-color: white;
     color: black;
@@ -17,9 +21,12 @@
     letter-spacing: 0.025em;
     margin-bottom: 200px;
   }
-  
+
   body {
+    background-image: url("https://image.ibb.co/mFHh6G/Untitled_5.jpg");
+    background-repeat: no-repeat;
     background-color: white;
+    background-size: 100%;
   }
 
 h4 {
@@ -28,17 +35,31 @@ h4 {
     font-size: 30px !important;
 }
 
+h2 {
+  color: #4563c5 !important;
+}
+.nav-pills a{
+  color:white;
+  background:transparent;
+  opacity:0.5;
+  font-family: 'Roboto',sans-serif;
+  }
+
+  .nav-pills a:hover {
+    color: black;
+}
+
   #name1 {
       float: left;
-      color: #223374 !important;
+      color: white !important;
       font-family: 'Roboto', sans-serif;
       font-weight: 700;
       font-size: 80px !important;
   }
-  
+
   #here1 {
       float: left;
-      color: #4563c5 !important;
+      color: white !important;
       font-family: 'Roboto', sans-serif;
       font-weight: 100;
       font-size: 80px !important;
@@ -47,5 +68,5 @@ h4 {
   #descr {
       font-family: 'Roboto', sans-serif;
       font-weight: 100;
-      font-size: 25px;
+      font-size: 20px;
   }
