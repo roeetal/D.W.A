@@ -1,109 +1,9 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
 from subprocess import Popen, PIPE
-from collections import defaultdict
+from collections import deque, defaultdict
 from pattern.en import conjugate
 import json
-
-json_string2 = ""
-json_string1 = r'''
-{
-    "text": "He is often writing about the University of Central Florida.",
-    "tokens": [
-        {
-            "children": [],
-            "head": 3,
-            "index": 0,
-            "label": "nsubj",
-            "tag": "attribute { name: \"Case\" value: \"Nom\" } attribute { name: \"Gender\" value: \"Masc\" } attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"Person\" value: \"3\" } attribute { name: \"PronType\" value: \"Prs\" } attribute { name: \"fPOS\" value: \"PRON++PRP\" } ",
-            "word": "he"
-        },
-        {
-            "children": [],
-            "head": 3,
-            "index": 1,
-            "label": "aux",
-            "tag": "attribute { name: \"Mood\" value: \"Ind\" } attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"Person\" value: \"3\" } attribute { name: \"Tense\" value: \"Pres\" } attribute { name: \"VerbForm\" value: \"Fin\" } attribute { name: \"fPOS\" value: \"AUX++VBZ\" } ",
-            "word": "is"
-        },
-        {
-            "children": [],
-            "head": 3,
-            "index": 2,
-            "label": "advmod",
-            "tag": "attribute { name: \"fPOS\" value: \"ADV++RB\" } ",
-            "word": "often"
-        },
-        {
-            "children": [
-                0,
-                1,
-                2,
-                6
-            ],
-            "head": -1,
-            "index": 3,
-            "label": "root",
-            "tag": "attribute { name: \"Tense\" value: \"Pres\" } attribute { name: \"VerbForm\" value: \"Part\" } attribute { name: \"fPOS\" value: \"VERB++VBG\" } ",
-            "word": "writing"
-        },
-        {
-            "children": [],
-            "head": 6,
-            "index": 4,
-            "label": "case",
-            "tag": "attribute { name: \"fPOS\" value: \"ADP++IN\" } ",
-            "word": "about"
-        },
-        {
-            "children": [],
-            "head": 6,
-            "index": 5,
-            "label": "det",
-            "tag": "attribute { name: \"Definite\" value: \"Def\" } attribute { name: \"PronType\" value: \"Art\" } attribute { name: \"fPOS\" value: \"DET++DT\" } ",
-            "word": "the"
-        },
-        {
-            "children": [
-                4,
-                5,
-                9
-            ],
-            "head": 3,
-            "index": 6,
-            "label": "obl",
-            "tag": "attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"fPOS\" value: \"NOUN++NN\" } ",
-            "word": "university"
-        },
-        {
-            "children": [],
-            "head": 9,
-            "index": 7,
-            "label": "case",
-            "tag": "attribute { name: \"fPOS\" value: \"ADP++IN\" } ",
-            "word": "of"
-        },
-        {
-            "children": [],
-            "head": 9,
-            "index": 8,
-            "label": "compound",
-            "tag": "attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"fPOS\" value: \"PROPN++NNP\" } ",
-            "word": "central"
-        },
-        {
-            "children": [
-                7,
-                8
-            ],
-            "head": 6,
-            "index": 9,
-            "label": "nmod",
-            "tag": "attribute { name: \"Number\" value: \"Sing\" } attribute { name: \"fPOS\" value: \"PROPN++NNP\" } ",
-            "word": "florida"
-        }
-    ]
-}'''
 
 question_lists = []
 answer_dict = defaultdict(list)
@@ -140,7 +40,6 @@ class Sentence:
 
 @app.route('/')
 def index():
-#    print parse("Hello we are at the hackathon.")
     return render_template('index.html')
 
 @app.route('/read')
@@ -150,11 +49,6 @@ def read():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
-# def parse(message):
-#     command = ("echo "+message+" | sudo docker run --rm -i brianlow/syntaxnet")
-#     output = Popen([command], stdout=PIPE, shell=True)
-#     return parse_eee(output.stdout.read())
 
 """
 requires text data in post
@@ -168,8 +62,6 @@ receives http post, sends data to be parsed, generate questions
 
 @app.route("/generate_questions", methods=['POST', 'GET'])
 def generate_questions():
-    global json_string2
-
     data = ''
     errors = ''
     thing = ''
@@ -249,11 +141,9 @@ def parse_source_sentence(sentence_index, sentence):
     question_list = defaultdict(list)
     child_token_list = []
     for token in sentence.tokens:
-        print(get_child_tokens(sentence, token.index));
         child_token_list.append(get_child_tokens(sentence, token.index))
 
     for i, token in enumerate(sentence.tokens):
-        print(token)
         if token.tag == "ROOT\n" or token.label == "root":
             question_tokens = ["what", "did"]
             for j, t in enumerate(sentence.tokens):
@@ -287,7 +177,6 @@ def parse_source_sentence(sentence_index, sentence):
             question = " ".join(question_tokens)
             question_list[i] = (sentence_index,
                     question[0].upper() + question[1:] + "?")
-            print(question)
 
         index = i
         while index != -1:
@@ -307,54 +196,44 @@ def parse_answers(question, answer):
 def parse(input_data):
     command = ("echo "+input_data+" | docker run --rm -i brianlow/syntaxnet")
     output = Popen([command], stdout=PIPE, shell=True)
-    tokens=[]
-    parsed_tokens = []
+
+    text = input_data.split(" ")
+    tokens = {}
+    stack = []
+    lines = []
     for line in output.stdout:
-        tokens.append(line)
-    lines = tokens
-    tokens.pop(0)
-    tokens.pop(0)
-    line = tokens[0]
-    head = -1
-    start_num = -1
-    parts = line.split(" ")
-    word = parts[0]
-    index = input_data.split(" ").index(word)
-    label = parts[1]
-    tag = parts[2]
-    token_num = 0
-    tokens.pop(0)
-    parsed_tokens.append(Token(index, word, head, tag, label, start_num))
-    while len(tokens)>0:
-        line = tokens[0]
-        head = index
-        start_num = line.find('+')/3
-        line = line[(start_num)*3:]
-        parts = line.split()
-        # if len(parts)>4:
-        word = parts[1]
-        index = input_data.split(" ").index(word)
-        label = parts[2]
-        tag = parts[3]
-        token_num +=1
-        tokens.pop(0)
-        parsed_tokens.append(Token(index, word, head, tag, label, start_num))
-    i=0
-    while i+1 < len(parsed_tokens):
-        j = i + 1
-        if i==0:
-            for k in range(len(parsed_tokens)-1):
-                if parsed_tokens[k].getStart() == 0:
-                    parsed_tokens[i].updateChildren(parsed_tokens[k].getIn())
-            i+=1
-        else:
-            while parsed_tokens[j].getStart() - parsed_tokens[i].getStart() == 1:
-                parsed_tokens[i].updateChildren(parsed_tokens[j].getIn())
-                j+=1
-            i+=1
-    final_result = Sentence(input_data, parsed_tokens)
-    print(final_result.toJSON())
-    return final_result
+        lines.append(line)
+
+    word, label, tag = lines[2].split(" ")
+    index = text.index(word)
+    while index in tokens:
+        index = text[1 + index:].index(word)
+    tokens[index] = Token(index, word, -1, tag, label, -1)
+    stack.append(index)
+
+    prev_depth = 0
+    for line in lines[3:]:
+        if not line:
+            continue
+        depth = line.find('+') // 4 + 1
+        word, label, tag = line[4 * depth:].split(" ")
+        index = text.index(word)
+        while index in tokens:
+            index = text[1 + index:].index(word)
+
+        while (depth <= prev_depth):
+            stack.pop()
+            prev_depth -= 1
+        head = stack[-1]
+        stack.append(index)
+        prev_depth = depth
+
+        tokens[index] = Token(index, word, head, tag, label, -1)
+        tokens[head].updateChildren(index)
+
+    sentence = Sentence(input_data, tokens)
+    print(sentence.toJSON())
+    return sentence
 
 if __name__=='__main__':
     # TODO: Threading true?
